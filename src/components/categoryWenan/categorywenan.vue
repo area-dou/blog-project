@@ -3,7 +3,7 @@
     <el-row :gutter="0">
       <el-col :xs="24" :sm="16" :md="16" :lg="16" :xl="16">
         <div class="content-title">
-          <h3>职场生活</h3> 
+          <h3>文字文案</h3> 
         </div>
         <div class="content">
           <div class="content-img">

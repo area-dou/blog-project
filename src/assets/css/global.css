@@ -1,4 +1,9 @@
 /*全局样式表*/
+/*@media screen and(max-width: 768px) {
+	body {
+		font-size: 20px;
+	}
+}*/
 html, body, #app {
 	height: 100%;
 	margin: 0;
@@ -19,4 +24,5 @@ a {
 	margin: 0;
 	padding: 0;
 	border: 0;
+	color: #000;
 }

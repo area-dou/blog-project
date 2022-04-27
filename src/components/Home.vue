@@ -13,7 +13,7 @@
         <div class="container-nav-list  hidden-xs-only">
           <el-menu :default-active="activePath" active-text-color="#ff6900" class="el-menu-demo " mode="horizontal" :router="true">
             <el-menu-item :index="item.path" v-for="item in label" :key="item.id">
-              <template>
+              <template slot-scope="scope">
                 <span slot="title">{{item.name}}</span>
               </template>
             </el-menu-item>
@@ -55,14 +55,29 @@
       <el-button type="info" @click="openSearch">取消</el-button>
     </div>
     <!-- 内容主体区 -->
-    <div>
       <!-- 内容嵌套路由占位符 -->
-      <router-view></router-view>
-    </div>
+    <el-row :gutter="0">
+      <el-col :xs="24" :sm="16" :md="16" :lg="16" :xl="16">
+        <router-view></router-view>
+      </el-col>
+      <el-col :xs="0" :sm="8" :md="8" :lg="8" :xl="8">
+        <aside-content></aside-content>
+      </el-col>
+    </el-row>
+    <!-- footer部分 -->
+    <el-footer>
+      <div :class="show ? 'footer-content font-size' : 'footer-content'">
+          Copyright © <a href="">波波资源</a>2022 备案号 <a href="">粤ICP备15012807号-1</a>
+      </div>
+    </el-footer>
   </div>
 </template>
 <script>
+import AsideContent from './aside/aside-content.vue'
 export default {
+  components: {
+    AsideContent
+  },
   data () {
     return {
     	list: [],
@@ -79,29 +94,35 @@ export default {
   created () {
   	this.getList()
     //页面初始化获取页面的宽度,小于500 show为true
-    this.screenWidth = document.body.clientWidth
+    this.screenWidth = document.documentElement.clientWidth
     if (this.screenWidth <= 768) {
       this.show = true
     } else {
       this.show = false
     }
   },
+   // <!--在watch中监听实时宽-->
+  watch: {
+    screenWidth (val) {
+      let that = this;
+      console.log("实时屏幕宽度：",val, that.screenWidth);
+      if (that.screenWidth <= 768) {
+         that.show = true
+      } else {
+        that.show = false
+      }
+      console.log(that.show)
+    }
+  },
   // 在页面mounted时，挂载window.onresize方法：
   mounted() {
-    const that = this;
+    let that = this;
     // <!--把window.onresize事件挂在到mounted函数上-->
     window.onresize = () => {
       return (() => {
         window.fullWidth = document.documentElement.clientWidth
         that.screenWidth = window.fullWidth // 宽
       })()
-    }
-  },
- // <!--在watch中监听实时宽-->
-  watch: {
-    screenWidth (val) {
-      let that = this;
-      console.log("实时屏幕宽度：",val, that.screenWidth );
     }
   },
   methods: {
@@ -127,8 +148,14 @@ export default {
 <style lang="less" scoped>
   .container {
   	height:  100%;
+    // max-width: 1200px;
+    margin: 0 auto;
     background-color: #f5f5f5;
 	}
+  .middle-main {
+    display: flex;
+    justify-content: flex-start;
+  }
   a {
     display: block;
     line-height: 0;
@@ -157,6 +184,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    box-sizing: border-box;
     padding: 0 10px;
   }
   .mb-logo {
@@ -187,6 +215,7 @@ export default {
   .container-logo {
     display: flex;
     justify-content: flex-start;
+    box-sizing: border-box;
     font-size: 14px;
     color: #ccc;
   }
@@ -214,6 +243,7 @@ export default {
   .el-menu-demo {
     display: flex;
     justify-content: flex-end;
+    box-sizing: border-box;
     border-bottom: 0 !important;
   }
   .search-box {
@@ -264,4 +294,25 @@ export default {
     padding: 2px;
     color: #666;
   } 
+  .el-footer {
+    background-color: #f5f5f5;
+  }
+  .footer-content {
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    height: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    overflow: hidden;
+    color: #666;
+    padding: 10px 0;
+  }
+  .footer-content a{
+    padding: 0 5px;
+    line-height: 1.4;
+  }
+  .font-size {
+    font-size: 12px;
+  }
 </style>

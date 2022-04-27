@@ -14,7 +14,10 @@ import {
   Row,
   Col,
   Message,
-  Drawer
+  Drawer,
+  Breadcrumb,
+  BreadcrumbItem,
+  Input
 } from 'element-ui'
 
 Vue.use(Button)
@@ -31,5 +34,8 @@ Vue.use(MenuItem)
 Vue.use(Row)
 Vue.use(Col)
 Vue.use(Drawer)
+Vue.use(Breadcrumb)
+Vue.use(BreadcrumbItem)
+Vue.use(Input)
 // 全局挂载弹窗
 Vue.prototype.$message = Message
